@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Name: A Coding Challenge</title>
+    <title>Hundo: A Coding Challenge</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -33,7 +33,7 @@
             <div class="container">
                 <a class="navbar-brand" href="/index.html">
                     <img src="img/S_Logo.png" height="40" />
-                    App Name
+                    Hundo
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -53,7 +53,7 @@
                         </li>
                         <li class="nav-item">
                             <!--Change Me-->
-                            <a class="nav-link" href="#">The Repo</a>
+                            <a class="nav-link" href="https://github.com/sijo708/Hundo">The Repo</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="https://sensational-griffin-35a826.netlify.app/">Portfolio</a>
@@ -74,33 +74,112 @@
         <h1 class="border-bottom border-dark">The Code</h1>
         <div class="row">
             <!--the JavaScript code-->
-            <div class="col-12 col-lg-4">
+            <div class="col-12 col-lg-8">
                 <pre class="line-numbers">
                     <code class="language-js">
-                        function displayMessage(){
-                            let inputBox = document.getElementById('message');
-                            let message = inputBox.value;
-                        
-                            Swal.fire(
-                                {
-                                    backdrop: false,
-                                    title: 'App Name',
-                                    text: message
-                                }
-                            );
-                        }
+                        // step 1: get the start and end numbers from the input boxes
+function getValues() {
+    // get the inputs by their ID
+    let startValue = document.getElementById('startValue').value;
+    let endValue = document.getElementById('endValue').value;
+
+    startValue = parseInt(startValue);
+    endValue = parseInt(endValue);
+
+    if (isNaN(startValue) || isNaN(endValue)){
+        Swal.fire({
+            icon: 'error',
+            title: 'Uh oh!',
+            text: 'Please enter a valid number for both the start and end values.',
+            backdrop: false
+        });
+    }
+    
+    else if (startValue >= endValue) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Uh oh!',
+            text: 'Please enter a valid number for both the start and end values.',
+            backdrop: false
+        });
+
+    }
+    else {
+        let values = generateNumbers(startValue, endValue);
+        displayNumbers(values);
+    }
+
+}
+
+// step 2: get all the numbers in that range
+function generateNumbers(start, end) {
+    let numbers = [];
+
+    for (let number = start; number <= end; number = number + 1) {
+        numbers.push(number);
+    }
+
+    return numbers;
+}
+
+// step 3: put those numbers on the page
+function displayNumbers(values) {
+
+    let resultsTable = document.getElementById('result');
+
+    resultsTable.innerHTML = '';
+
+    // for each number in values:
+    for (let i = 0; i < values.length; i = i + 1) {
+        // - create some HTML with the number
+        let number = values[i];
+
+        let html = '&lt;tr>&lt;td>'
+        // - determine whether it should be bold
+
+        if (number % 2 == 0) {
+            html += '&lt;b>' + number + '&lt;/b>';
+        }
+        else {
+            html += number;
+        }
+        html += '&lt;/td>&lt;/tr>';
+
+        // - put it on the page in the element with the ID result        
+        resultsTable.innerHTML += html;
+    }
+}
                     </code>>
                 </pre>
             </div>
 
             <!-- The code's explanation -->
             <div class="col-12 col-lg-4">
-                <p>The code is structured in one function</p>
-                <h5><code>displayMessage()</code></h5>
+                <p>The code is structured in Three function</p>
+                <h5><code>getValues()</code></h5>
                 <p>
-                    The <code>displayMessage</code> function gets the 
-                    text from the input element and displays it in a 
-                    Sweet Alert popup.
+                    The <code>getValues()</code> function gets the start and end values entered by the user, 
+                    making sure they're numbers. It checks if the inputs are valid numbers, and if not, 
+                    it shows an error message using SweetAlert. Also, it checks that the start value is less 
+                    than the end value; if not, it shows the same error message. If everything is okay, 
+                    it then makes a list of numbers from the start to the end.
+                    
+
+                </p>
+
+                <h5><code>generateNumbers()</code></h5>
+                <p>
+                    The <code>generateNumbers()</code> function creates an array of numbers within a specified range.
+                    The function uses a for loop to go through each number from 'start' to 'end', increasing by 1 each time.
+                    In every step, the function adds the current number to the 'numbers' list. 
+                    After finishing all the steps, it gives back the list containing the numbers from 'start' to 'end.' 
+                    So, it's a way to create a list of numbers within a specific range.
+                </p>
+                <h5><code>displayNumbers()</code></h5>
+                <p>
+                    The <code>displayNumbers()</code> function shows a list of numbers on a webpage. 
+                    It checks if each number is even, making those bold. After doing this for all numbers, 
+                    it displays them on the webpage in a table with the ID 'result'. 
                 </p>
             </div>
         </div>
